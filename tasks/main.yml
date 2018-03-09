@@ -1,0 +1,2 @@
+- include: elastalert.yml
+  when: elastalert_rules is defined

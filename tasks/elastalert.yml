@@ -1,0 +1,38 @@
+---
+- name: clear elastalert rules
+  file:
+    dest: '{{ elastalert_dir }}/rules'
+    state: absent
+
+- name: ensure elastalert dir
+  file:
+    dest: '{{ elastalert_dir }}/rules'
+    state: directory
+
+- name: ensure elastalert config
+  template:
+    src: elastalert.yml.j2
+    dest: '{{ elastalert_dir }}/elastalert.yml'
+
+- name: create elastalert rules
+  template:
+    src: rule.yaml.j2
+    dest: '{{ elastalert_dir }}/rules/{{ item.name | lower | replace(" ", "_") }}.yaml'
+  vars:
+    rule: '{{ item }}'
+  with_items: '{{ elastalert_rules }}'
+
+- name: run elastalert container
+  docker_container:
+    state: started
+    restart: yes
+    recreate: yes
+    name: '{{ elastalert_container_name }}'
+    image: '{{ elastalert_image }}'
+    pull: true
+    restart_policy: always
+    links: '{{ elastalert_links }}'
+    env: '{{ elastalert_env }}'
+    volumes:
+      - '{{ elastalert_dir }}/elastalert.yml:/opt/elastalert/config.yaml'
+      - '{{ elastalert_dir }}/rules:/opt/elastalert/rules'
