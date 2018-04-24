@@ -3,6 +3,7 @@ elastalert_dir: /opt/docker/services/elastalert
 elastalert_image: kr3ssh/elastalert
 elastalert_container_name: elastalert
 elastalert_links: []
+elastalert_networks: []
 elastalert_elasticsearch_host: localhost
 elastalert_elasticsearch_port: 9200
 elastalert_env:

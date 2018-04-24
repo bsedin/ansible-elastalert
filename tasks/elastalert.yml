@@ -32,6 +32,7 @@
     pull: true
     restart_policy: always
     links: '{{ elastalert_links }}'
+    networks: '{{ elastalert_networks }}'
     env: '{{ elastalert_env }}'
     volumes:
       - '{{ elastalert_dir }}/elastalert.yml:/opt/elastalert/config.yaml'
