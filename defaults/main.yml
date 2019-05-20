@@ -1,11 +1,12 @@
 ---
 elastalert_dir: /opt/docker/services/elastalert
-elastalert_image: kr3ssh/elastalert
+elastalert_image: kr3ssh/elastalert:{{ elastalert_version }}
+elastalert_version: latest
 elastalert_container_name: elastalert
 elastalert_links: []
 elastalert_networks: []
 elastalert_elasticsearch_host: localhost
 elastalert_elasticsearch_port: 9200
 elastalert_env:
-  ELASTALERT_CREATE_INDEX: true
+  ELASTALERT_CREATE_INDEX: 'true'
 elastalert_rules: []
